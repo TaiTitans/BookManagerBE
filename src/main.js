@@ -4,15 +4,15 @@ const app = express();
 require('dotenv').config();
 
 // const { json } = require('body-parser');
-const port = process.env.PORT || 3000;
 const route = require('./app/routers/MainRouter');
-const db = require('./config/ConfigDB');
+const db = require('./config/configDb');
 //socket.io
 const http = require('http');
 const server = http.createServer(app);
 
 global.__basedir = __dirname;
 
+const port = process.env.PORT || 3000;
 
 
 //connect to DB
