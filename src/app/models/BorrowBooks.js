@@ -13,6 +13,7 @@ const borrowBooksSchema = new Schema({
     MaSach:{
         type: String,
         required:true,
+        ref: 'Books'
     },
     NgayMuon:{
         type:Date,

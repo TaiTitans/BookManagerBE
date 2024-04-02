@@ -18,6 +18,21 @@ class PublisherController{
         }
 
     }
+    async delete(req, res, next){
+        try{
+            const {_id} = req.body
+            const deletedPublisher = Publisher.find({_id})
+            if(!deletedPublisher){
+                res.status(400).json({data:null, error:"Data not found"})
+            }else{
+                await deletedPublisher.deleteOne()
+                res.status(200).json({data:"Delete Success", error:null})
+            }
+            next()
+        }catch(error){
+            errorHandle(error, res,req,next)
+        }
+    }
 }
 
 module.exports = new PublisherController
