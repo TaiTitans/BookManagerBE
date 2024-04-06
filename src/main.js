@@ -19,6 +19,12 @@ app.use(cors(corsFeature))
 //connect to DB
 db.connect();
 
+// cookie
+const cookieParser = require('cookie-parser');
+
+app.use(cookieParser());
+
+
 // for parsing application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 

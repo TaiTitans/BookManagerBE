@@ -1,7 +1,7 @@
 const Customer = require('../models/Customer')
 const handleErrors = require('../middleware/errorHandler');
 const bcrypt = require('bcrypt');
-
+const generateAccessToken = require('../middleware/generateAccessToken');
 class CustomerController{
     async dangky(req, res){
         try{
@@ -65,7 +65,12 @@ class CustomerController{
         if(!isMatch){
           return res.status(401).json({message:"Sai mat khau"})
         }
-        res.status(200).json({message:"Dang nhap thanh cong"})
+
+         // Generate token here
+         const token = generateAccessToken(customer);
+        res.cookie('accessToken', token, { httpOnly: true, maxAge: 3600000 }); 
+        res.status(200).json({data:{customer: customer.MaDocGia},message:"Dang nhap thanh cong"})
+
       }catch(error){
         handleErrors(error, res); 
       }
