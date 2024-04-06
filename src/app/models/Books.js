@@ -35,6 +35,10 @@ const BooksSchema = new Schema({
     TacGia: {
         type: String,
         required:true,
+    },
+    HinhAnh:{
+        type: String,
+        require:true
     }
 });
 

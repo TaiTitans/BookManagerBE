@@ -3,7 +3,7 @@ const errorHandle = require("../middleware/errorHandler")
 class BooksController {
   async create(req, res, next) {
     try {
-      const { MaSach, TenSach, DonGia, SoQuyen, NamXuatBan, MaNXB, TacGia } = req.body;
+      const { MaSach, TenSach, DonGia, SoQuyen, NamXuatBan, MaNXB, TacGia, HinhAnh } = req.body;
 
       const BooksInfo = {
         MaSach: MaSach,
@@ -13,6 +13,7 @@ class BooksController {
         NamXuatBan: NamXuatBan,
         MaNXB: MaNXB,
         TacGia: TacGia,
+        HinhAnh: HinhAnh
       };
 
       const books = new Books(BooksInfo);
@@ -26,7 +27,7 @@ class BooksController {
   }
   async update(req, res, next) {
     try {
-        const {_id ,MaSach, TenSach, DonGia, SoQuyen, NamXuatBan, MaNXB, TacGia } = req.body;
+        const {_id ,MaSach, TenSach, DonGia, SoQuyen, NamXuatBan, MaNXB, TacGia, HinhAnh } = req.body;
         const booksUpdate = await Books.findOne({ _id });
 
 
@@ -42,6 +43,7 @@ class BooksController {
         booksUpdate.NamXuatBan = NamXuatBan;
         booksUpdate.MaNXB = MaNXB;
         booksUpdate.TacGia = TacGia;
+        booksUpdate.HinhAnh = HinhAnh
 
         await booksUpdate.save();
         console.log("Updated book:", booksUpdate);
