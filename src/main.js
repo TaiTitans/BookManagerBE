@@ -1,5 +1,5 @@
 const express = require('express')
-
+const cors = require('cors')
 const app = express();
 require('dotenv').config();
 
@@ -9,11 +9,12 @@ const db = require('./config/configDb');
 //socket.io
 const http = require('http');
 const server = http.createServer(app);
-
+const corsFeature = require('./config/cors')
 global.__basedir = __dirname;
 
 const port = process.env.PORT || 3000;
-
+// cors
+app.use(cors(corsFeature))
 
 //connect to DB
 db.connect();

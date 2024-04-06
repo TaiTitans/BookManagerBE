@@ -1,11 +1,11 @@
 const Customer = require('../models/Customer')
-const errorHandle = require('../middleware/errorHandler')
+const handleErrors = require('../middleware/errorHandler');
 const bcrypt = require('bcrypt');
 
 class CustomerController{
-    async dangky(req, res, next){
+    async dangky(req, res){
         try{
-            const {MaDocGia,HoLot,Ten,NgaySinh,GioiTinh,DiaChi,DienThoai} = req.body;
+            const {MaDocGia,HoLot,Ten,NgaySinh,GioiTinh,DiaChi,DienThoai, MatKhau} = req.body;
             const existingCustomer = await Customer.findOne({ MaDocGia });
             if (existingCustomer) {
               return res.status(400).json({ message: 'Tài khoản đã tồn tại' });
@@ -22,12 +22,11 @@ class CustomerController{
             DienThoai,
             MatKhau: hashedPassword, // Lưu mật khẩu đã được mã hóa vào cơ sở dữ liệu
         });
-        await newCustomer.save();
-                res.status(201).json({data:customer, error:null})
+        await newCustomer.save()
+                res.status(201).json({data:newCustomer, error:null})
         } catch(error){
-          errorHandle(error, res,req,next)
+          handleErrors(error, res); 
         }
-        next()
     }
     async getOne(req, res, next){
         try{
@@ -39,7 +38,7 @@ class CustomerController{
           } 
           res.status(200).json({ data: customerFindOne, error: null });
         }catch(error){
-          errorHandle(error, res,req,next)
+          handleErrors(error, res); 
         }
       }
       async getAll(req,res, next){
@@ -52,7 +51,7 @@ class CustomerController{
           next()
         }
       catch(error){
-        errorHandle(error, res,req,next)
+        handleErrors(error, res); 
       }
     }
     async dangnhap(req,res){
@@ -68,7 +67,7 @@ class CustomerController{
         }
         res.status(200).json({message:"Dang nhap thanh cong"})
       }catch(error){
-      errorHandle(error,res,req,next)
+        handleErrors(error, res); 
       }
     }
 
