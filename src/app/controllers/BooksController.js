@@ -28,7 +28,7 @@ class BooksController {
   async update(req, res, next) {
     try {
         const {_id ,MaSach, TenSach, DonGia, SoQuyen, NamXuatBan, MaNXB, TacGia, HinhAnh } = req.body;
-        const booksUpdate = await Books.findOne({ _id });
+        const booksUpdate = await Books.findOne({ MaSach });
 
 
         if (!booksUpdate) {
@@ -55,13 +55,13 @@ class BooksController {
 }
 async delete(req, res, next){
   try {
-    const {_id} = req.body;
+    const {_id} = req.params
     const booksDelete = await Books.findOne({ _id });
     if (!booksDelete) {
       return res.status(404).json({ data: null, error: "Books Data Not Found" });
   } else{
     await booksDelete.deleteOne()
-    res.status(200).json({data:'Book deleted', error:null})
+    res.status(200).json({data:booksDelete, error:null})
   }
 
     
@@ -71,7 +71,7 @@ async delete(req, res, next){
 }
   async getOne(req, res, next){
     try{
-      const {_id} = req.body
+      const {_id} = req.params._id
       const booksFind = await Books.findOne({_id})
 
       if(!booksFind){
