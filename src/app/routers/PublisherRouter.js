@@ -1,10 +1,12 @@
 const express = require('express')
 const router = express.Router()
 const PublisherController = require('../controllers/PublisherController')
+const { authorizeCustomer, authorizeStaff } = require('../middleware/checkingPermission');
+const authenticateToken = require('../middleware/authenticateToken');
 //create nxb
-router.post('/create', PublisherController.create)
-router.delete('/delete', PublisherController.delete)
-router.get('/getAll', PublisherController.getAll)
+router.post('/create',authenticateToken, authorizeStaff,PublisherController.create)
+router.delete('/delete',authenticateToken,authorizeStaff, PublisherController.delete)
+router.get('/getAll',authenticateToken,authorizeStaff, PublisherController.getAll)
 
 
 module.exports = router

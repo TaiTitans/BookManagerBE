@@ -1,13 +1,10 @@
-const jwt = require('jsonwebtoken');
-const Staff = require('../models/Staff');
-
-function generateAccessTokenStaff(username) {
+function generateAccessTokenStaff(staff) {
     const payload = {
-        _id: Staff._id,
-        MSNV: Staff.MSNV
+        _id: staff._id,
+        MSNV: staff.MSNV
     };
     const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' });
     return accessToken;
 }
 
-module.exports = generateAccessTokenStaff;
+module.exports = generateAccessTokenStaff
