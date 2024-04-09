@@ -1,5 +1,5 @@
 const Publisher = require("../models/Publisher")
-
+const handleErrors = require('../middleware/errorHandler');
 class PublisherController{
     async create(req,res,next){
         try{
@@ -14,7 +14,7 @@ class PublisherController{
                 res.status(200).json({data:publisher, error:null})
                 next()
         } catch (error){
-            res.status(400).json({data:null, error:error})
+            handleErrors(error, res); 
         }
 
     }
@@ -30,8 +30,21 @@ class PublisherController{
             }
             next()
         }catch(error){
-            errorHandle(error, res,req,next)
+            handleErrors(error, res); 
         }
+    }
+    async getAll(req,res, next){
+        try{
+          const publisherFindAll = await Publisher.find({})
+          if(!publisherFindAll){
+            res.status(404).json({data:null, error: "Data Not Found"})
+          }
+          res.status(200).json({data: publisherFindAll, error: null})
+          next()
+        }
+      catch(error){
+        handleErrors(error, res); 
+      }
     }
 }
 

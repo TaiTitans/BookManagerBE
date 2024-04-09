@@ -75,6 +75,22 @@ class CustomerController{
         handleErrors(error, res); 
       }
     }
+    async delete(req, res, next){
+      try {
+        const {_id} = req.params
+        const customerDelete = await Customer.findOne({ _id });
+        if (!customerDelete) {
+          return res.status(404).json({ data: null, error: "Customer Data Not Found" });
+      } else{
+        await customerDelete.deleteOne()
+        res.status(200).json({data:customerDelete, error:null})
+      }
+    
+        
+      } catch(error){
+        handleErrors(error, res)
+      }
+    }
 
 
 }
