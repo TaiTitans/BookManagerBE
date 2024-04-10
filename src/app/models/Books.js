@@ -10,11 +10,12 @@ const BooksSchema = new Schema({
         required:true,
         unique:true,
         index:true,
-        ref: 'BorrowBooks',
+        // ref: 'BorrowBooks',
     },
     TenSach:{
         type:String,
         required:true,
+        // ref: 'BorrowBooks'
     },
     DonGia:{
         type:Number,

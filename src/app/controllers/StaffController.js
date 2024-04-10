@@ -1,6 +1,6 @@
 const Staff = require('../models/Staff');
 const errorHandle = require("../middleware/errorHandler")
-const generateAccessTokenStaff = require('../middleware/generateAccessTokenStaff');
+const generateAccessToken = require('../middleware/generateAccessTokenStaff');
 class StaffController{
      async create(req, res, next){
           try{
@@ -22,23 +22,25 @@ class StaffController{
           next();
      }
      async dangnhap(req, res) {
-      const { MSNV, Password } = req.body;
-      try {
-          const staff = await Staff.findOne({ MSNV });
-          if (!staff) {
-              return res.status(404).json({ message: "Tài Khoản Không Tồn Tại" });
+          const { MSNV, Password } = req.body;
+          try {
+              const staff = await Staff.findOne({ MSNV });
+              if (!staff) {
+                  return res.status(404).json({ message: "Tài Khoản Không Tồn Tại" });
+              }
+              if (Password !== staff.Password) {
+                  return res.status(401).json({ message: "Sai mật khẩu" });
+              }
+      
+              // Generate token here
+              const token = generateAccessToken(staff);
+              res.cookie('accessToken', token, { httpOnly: true, maxAge: 3600000 });
+              res.status(200).json({ data: { staff: staff.MSNV }, message: "Đăng nhập thành công" });
+      
+          } catch (error) {
+              errorHandle(error, res);
           }
-          if (Password !== staff.Password) {
-              return res.status(401).json({ message: "Sai mật khẩu" });
-          }
-  
-          const token = generateAccessTokenStaff(staff);
-          res.cookie('accessToken', token, { httpOnly: true, maxAge: 3600000 });
-          res.status(200).json({ data: { staff: staff.MSNV }, message: "Đăng nhập thành công" });
-      } catch (error) {
-          errorHandle(error, res);
       }
-  }
 
       async getAll(req,res){
           try{

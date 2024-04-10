@@ -4,6 +4,7 @@ const Schema = mongoose.Schema
 
 // Declare the Schema of the Mongo model
 const borrowBooksSchema = new Schema({
+    Sach: { type: Schema.Types.ObjectId, ref: 'Books' },
     MaDocGia:{
         type:String,
         required:true,
@@ -13,7 +14,7 @@ const borrowBooksSchema = new Schema({
     MaSach:{
         type: String,
         required:true,
-        ref: 'Books'
+        // ref: 'Books'
     },
     NgayMuon:{
         type:Date,
