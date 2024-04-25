@@ -16,6 +16,10 @@ const borrowBooksSchema = new Schema({
         required:true,
         // ref: 'Books'
     },
+    TrangThai:{
+        type: Boolean,
+        default: false
+    },
     NgayMuon:{
         type:Date,
         required:true,

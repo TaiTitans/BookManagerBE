@@ -7,6 +7,7 @@ router.post('/createBorrowBook', BorrowBooksController.createBorrowBook)
 router.delete('/delete/:_id', BorrowBooksController.delete)
 router.get('/getAll', BorrowBooksController.getAll)
 router.get('/getAllWithCustomer/:MaDocGia', BorrowBooksController.getAllWithCustomer)
+router.post('/duyet', BorrowBooksController.duyetMuon)
 
 
 module.exports = router

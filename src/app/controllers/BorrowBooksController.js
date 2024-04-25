@@ -81,6 +81,7 @@ class BorrowBooksController{
           "TenSach": item.Sach.TenSach,
           "MaDocGia": item.MaDocGia,
           "MaSach": item.MaSach,
+          "TrangThai": item.TrangThai,
           "NgayMuon":item.NgayMuon,
           "NgayTra":item.NgayTra
           });
@@ -125,6 +126,23 @@ class BorrowBooksController{
       handleErrors(error, res); 
     }
   }
+  async duyetMuon(req, res) {
+    try {
+        const { _id, TrangThai } = req.body;
+        const updateStatus = await BorrowBooks.findOne({ _id });
+        if (!updateStatus) {
+            return res.status(404).json({ data: null, error: 'Không tìm thấy sách được mượn' });
+        }
+
+        updateStatus.TrangThai = TrangThai;
+        await updateStatus.save();
+        
+        return res.status(200).json({ data: updateStatus, error: null });
+    } catch (error) {
+        handleErrors(error, res);
+    }
+}
+
 }
 
 module.exports = new BorrowBooksController
